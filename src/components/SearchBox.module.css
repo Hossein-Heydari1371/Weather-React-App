@@ -1,0 +1,30 @@
+.search{
+    margin-bottom: 50px
+}
+
+.search input{
+    width: 200px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 10px 10px 0;
+    font-size: 0.8rem;
+    background-color: #e0e0e0;
+}
+
+.search input:focus{
+    outline: none;
+}
+
+.search button{
+    width: 60px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    background-color: #6552f4;
+    color: #e0e0e0;
+    cursor: pointer;
+}
+
