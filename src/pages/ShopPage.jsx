@@ -28,7 +28,7 @@ export default function ShopPage() {
   const sort = params.get('sort') || 'newest'
   const page = Number(params.get('page') || 1)
   const maxPrice = Number(params.get('maxPrice') || 0)
-  const inStockOnly = params.get('inStock') === '1'
+  const inStockOnly = params.get('inStockOnly') === '1'
 
   const [facets, setFacets] = useState({ priceMin: 0, priceMax: 0, categories: [] })
   const [result, setResult] = useState({ items: [], total: 0, totalPages: 1, page: 1 })
