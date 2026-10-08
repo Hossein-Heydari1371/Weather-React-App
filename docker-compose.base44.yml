@@ -1,0 +1,45 @@
+# Base44 dev environment for the Weather React App (Vite + React).
+#
+# Frontend-only project: no backend, no database, no external credentials.
+# The OpenWeatherMap API key is read from src/services/weatherApi.js and the
+# browser calls the API directly.
+#
+# Runs the app from the cloned source with a live-reloading Vite dev server on
+# host port 3000. Dependencies are (re)installed from the lockfile on startup so
+# manifest changes take effect without an image rebuild.
+
+services:
+  web:
+    image: node:22-slim
+    working_dir: /app
+    # Install from the lockfile after the bind mount is available, then start
+    # the dev server. `exec` keeps the dev server as PID 1 for clean signals.
+    command:
+      - sh
+      - -ec
+      - npm ci --no-audit --no-fund && exec npm run dev -- --host 0.0.0.0 --port 3000 --strictPort
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      # Keep node_modules inside Docker so the host bind mount can't shadow it.
+      - node_modules:/app/node_modules
+    environment:
+      # Platform-provided passthroughs (bare entries: values come from the host env).
+      - BASE44_PREVIEW_MODE
+      # Vite >= 6.1 appends this to server.allowedHosts so the preview host works.
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 5
+    restart: on-failure
+
+volumes:
+  node_modules:

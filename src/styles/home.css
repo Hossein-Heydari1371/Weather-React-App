@@ -1,0 +1,579 @@
+/* ==========================================================================
+   Home — hero, category showcase, brand story, new collection, why nilgoon
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- hero */
+.ng-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  padding: calc(var(--ng-header-h) + 46px) var(--ng-gutter) clamp(96px, 13vh, 150px);
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--ng-cream);
+}
+
+.ng-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(120% 92% at 50% 104%, rgba(255, 226, 184, 0.5), transparent 62%),
+    linear-gradient(
+      180deg,
+      #1d1611 0%,
+      #3a2b20 24%,
+      #6b4f36 50%,
+      #a8814f 70%,
+      #d9bb92 86%,
+      #f1e1ca 100%
+    );
+}
+
+/* The architectural arch opening onto a sunset horizon. */
+.ng-hero__arch {
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  width: min(720px, 58vw);
+  height: min(660px, 62vh);
+  transform: translateX(-50%);
+  border-radius: 999px 999px 26px 26px;
+  background:
+    radial-gradient(
+      110% 82% at 50% 92%,
+      rgba(255, 214, 150, 0.95),
+      rgba(255, 158, 96, 0.6) 34%,
+      rgba(140, 92, 120, 0.45) 62%,
+      rgba(38, 38, 68, 0.72) 100%
+    ),
+    linear-gradient(180deg, #ffd79b, #e79465 40%, #8a5c7c 74%, #2b2a4e);
+  filter: blur(1.6px) saturate(1.12);
+  opacity: 1;
+}
+
+/* Soft light bloom around the archway. */
+.ng-hero__arch::after {
+  content: '';
+  position: absolute;
+  inset: -6% -10%;
+  border-radius: inherit;
+  background: radial-gradient(60% 55% at 50% 62%, rgba(255, 226, 178, 0.4), transparent 72%);
+  filter: blur(26px);
+}
+
+.ng-hero__haze {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 55% at 50% 44%, rgba(255, 232, 196, 0.26), transparent 70%),
+    radial-gradient(125% 105% at 50% 50%, transparent 46%, rgba(13, 10, 8, 0.62) 100%);
+}
+
+/* Reflective marble floor. */
+.ng-hero__floor {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 46%;
+  background:
+    radial-gradient(46% 120% at 50% 0%, rgba(255, 236, 200, 0.55), transparent 72%),
+    linear-gradient(
+      180deg,
+      rgba(38, 28, 21, 0.86) 0%,
+      rgba(96, 74, 54, 0.72) 44%,
+      rgba(206, 182, 152, 0.9) 100%
+    );
+}
+
+.ng-hero__grain {
+  position: absolute;
+  inset: 0;
+  background-image: var(--ng-grain);
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+.ng-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(16px, 3vw, 44px);
+  width: 100%;
+  max-width: var(--ng-max);
+  margin-inline: auto;
+}
+
+.ng-hero__text {
+  grid-column: 1;
+}
+
+.ng-hero .ng-eyebrow {
+  color: var(--ng-gold-bright);
+}
+
+.ng-hero__title {
+  margin-top: 16px;
+  font-size: clamp(1.6rem, 3.5vw, 3.3rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--ng-cream);
+  text-shadow: 0 8px 34px rgba(10, 7, 5, 0.45);
+}
+
+.ng-hero__subtitle {
+  margin-top: 14px;
+  max-width: 32ch;
+  font-size: clamp(0.88rem, 1.05vw, 1.02rem);
+  color: rgba(255, 249, 240, 0.82);
+}
+
+.ng-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.ng-hero__stage {
+  position: relative;
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2px, 1vw, 14px);
+}
+
+.ng-hero__stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ng-hero__plate {
+  position: relative;
+  width: clamp(210px, 25vw, 350px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--ng-radius-lg);
+  box-shadow:
+    0 40px 80px rgba(10, 7, 5, 0.5),
+    0 0 0 1px rgba(232, 216, 184, 0.22),
+    0 0 64px rgba(200, 166, 106, 0.18);
+}
+
+.ng-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.06);
+  pointer-events: none;
+  transition:
+    opacity 1s var(--ng-ease),
+    transform 1.5s var(--ng-ease-out);
+}
+
+.ng-hero__slide.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.ng-hero__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Circular marble pedestal under the product. */
+.ng-hero__disc {
+  width: clamp(220px, 27vw, 400px);
+  height: clamp(34px, 4.2vw, 62px);
+  margin-top: -12px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      60% 100% at 50% 18%,
+      rgba(255, 240, 212, 0.96),
+      rgba(214, 186, 146, 0.78) 44%,
+      rgba(118, 94, 70, 0.5) 78%,
+      rgba(56, 42, 31, 0.22) 100%
+    );
+  box-shadow:
+    0 26px 60px rgba(10, 7, 5, 0.5),
+    0 0 0 1px rgba(232, 216, 184, 0.2),
+    inset 0 3px 10px rgba(255, 255, 255, 0.32);
+}
+
+.ng-hero__arrow {
+  display: grid;
+  place-items: center;
+  width: clamp(42px, 4vw, 56px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(232, 216, 184, 0.32);
+  border-radius: 50%;
+  background: rgba(24, 20, 16, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--ng-cream);
+  transition:
+    background 0.3s var(--ng-ease),
+    border-color 0.3s var(--ng-ease),
+    transform 0.3s var(--ng-ease);
+}
+
+.ng-hero__arrow:hover {
+  background: rgba(200, 166, 106, 0.28);
+  border-color: var(--ng-gold);
+  transform: scale(1.06);
+}
+
+.ng-hero__caption {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.ng-hero__caption-name {
+  font-size: 0.95rem;
+  color: var(--ng-cream);
+}
+
+.ng-hero__caption-name:hover {
+  color: var(--ng-gold-bright);
+}
+
+.ng-hero__caption .ng-price__now {
+  color: var(--ng-gold-bright);
+}
+
+.ng-hero__caption .ng-price__was {
+  color: rgba(255, 249, 240, 0.5);
+}
+
+.ng-hero__dots {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.ng-hero__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 249, 240, 0.32);
+  transition:
+    width 0.35s var(--ng-ease),
+    background 0.35s var(--ng-ease);
+}
+
+.ng-hero__dot.is-active {
+  width: 26px;
+  border-radius: var(--ng-radius-pill);
+  background: var(--ng-gold);
+}
+
+.ng-hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(18px, 3vh, 34px);
+  z-index: 3;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: rgba(255, 249, 240, 0.72);
+}
+
+.ng-hero__scroll-icon {
+  animation: ng-bob 2.6s var(--ng-ease) infinite;
+}
+
+@keyframes ng-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------- category showcase */
+.ng-catgrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.ng-catcard {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--ng-radius-lg);
+  background: var(--ng-surface-alt);
+}
+
+.ng-catcard__media {
+  position: absolute;
+  inset: 0;
+}
+
+.ng-catcard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ng-ease-out);
+}
+
+.ng-catcard:hover .ng-catcard__media img {
+  transform: scale(1.05);
+}
+
+.ng-catcard__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 15, 11, 0.08) 0%,
+    rgba(20, 15, 11, 0.04) 42%,
+    rgba(20, 15, 11, 0.84) 100%
+  );
+}
+
+.ng-catcard__body {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: grid;
+  gap: 4px;
+  padding: clamp(16px, 2vw, 26px);
+  color: var(--ng-cream);
+}
+
+.ng-catcard__name {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 500;
+}
+
+.ng-catcard__count {
+  font-size: 0.74rem;
+  color: rgba(255, 249, 240, 0.66);
+}
+
+.ng-catcard__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--ng-gold-bright);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.35s var(--ng-ease),
+    transform 0.35s var(--ng-ease);
+}
+
+.ng-catcard:hover .ng-catcard__cta,
+.ng-catcard:focus-visible .ng-catcard__cta {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------ brand story */
+.ng-story__grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  align-items: center;
+  gap: clamp(26px, 4.5vw, 68px);
+}
+
+.ng-story__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--ng-radius-lg);
+  box-shadow: var(--ng-shadow);
+}
+
+.ng-story__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ng-story__badge {
+  position: absolute;
+  inset-inline-start: 18px;
+  bottom: 18px;
+  padding: 9px 18px;
+  border: 1px solid var(--ng-line);
+  border-radius: var(--ng-radius-pill);
+  background: rgba(24, 20, 16, 0.6);
+  backdrop-filter: blur(12px);
+  color: var(--ng-gold-bright);
+  font-size: 0.78rem;
+}
+
+.ng-story__text {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.ng-story__lead {
+  font-size: 1.05rem;
+  color: var(--ng-brown);
+}
+
+.ng-story__p {
+  font-size: 0.92rem;
+  line-height: 2;
+  color: var(--ng-muted);
+}
+
+.ng-story__text .ng-btn {
+  justify-self: start;
+  margin-top: 8px;
+}
+
+/* -------------------------------------------------------- new collection */
+.ng-collection {
+  background: linear-gradient(180deg, transparent, rgba(216, 195, 165, 0.18), transparent);
+}
+
+/* ----------------------------------------------------------- why nilgoon */
+.ng-why__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 26px);
+}
+
+.ng-why__item {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: clamp(22px, 2.6vw, 32px);
+  border: 1px solid var(--ng-line-soft);
+  border-radius: var(--ng-radius-lg);
+  background: var(--ng-surface);
+  transition:
+    transform 0.5s var(--ng-ease),
+    box-shadow 0.5s var(--ng-ease),
+    border-color 0.5s var(--ng-ease);
+}
+
+.ng-why__item:hover {
+  transform: translateY(-5px);
+  border-color: var(--ng-line);
+  box-shadow: var(--ng-shadow-soft);
+}
+
+.ng-why__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--ng-line);
+  border-radius: var(--ng-radius-sm);
+  background: linear-gradient(135deg, rgba(200, 166, 106, 0.22), rgba(200, 166, 106, 0.05));
+  color: var(--ng-gold-deep);
+}
+
+.ng-why__title {
+  font-size: 1rem;
+}
+
+.ng-why__text {
+  font-size: 0.85rem;
+  line-height: 1.95;
+  color: var(--ng-muted);
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 1000px) {
+  .ng-why__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .ng-hero__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 26px;
+  }
+
+  .ng-hero__text {
+    grid-column: 1;
+    text-align: center;
+    justify-items: center;
+    display: grid;
+  }
+
+  .ng-hero__subtitle {
+    margin-inline: auto;
+  }
+
+  .ng-hero__stage {
+    grid-column: 1;
+  }
+
+  .ng-hero__cta {
+    justify-content: center;
+  }
+
+  .ng-catgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ng-story__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ng-story__media {
+    aspect-ratio: 4 / 5;
+    max-height: 60vh;
+  }
+}
+
+@media (max-width: 560px) {
+  .ng-catgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ng-why__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ng-hero__stage {
+    flex-direction: column-reverse;
+    gap: 16px;
+  }
+
+  .ng-hero__arrow {
+    width: 44px;
+  }
+}

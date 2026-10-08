@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Design tokens
+   Single source of truth for colour, type, spacing and motion.
+   Ports directly to a WordPress theme as CSS custom properties.
+   ========================================================================== */
+
+:root {
+  /* ---- Palette (from the supplied references) ---- */
+  --ng-ivory: #f5efe6;
+  --ng-champagne: #d8c3a5;
+  --ng-gold: #c8a66a;
+  --ng-gold-bright: #e6d0a0;
+  --ng-gold-deep: #a8823f;
+  --ng-brown: #2b211a;
+  --ng-charcoal: #24201c;
+  --ng-cream: #fff9f0;
+  --ng-ink: #1b1613;
+  --ng-muted: #7c6d5f;
+  --ng-muted-light: #a2958a;
+
+  /* ---- Glass ---- */
+  --ng-glass: rgba(30, 25, 20, 0.35);
+  --ng-glass-strong: rgba(22, 18, 14, 0.68);
+  --ng-glass-panel: rgba(28, 23, 18, 0.52);
+  --ng-glass-light: rgba(255, 252, 246, 0.74);
+  --ng-line: rgba(200, 166, 106, 0.3);
+  --ng-line-soft: rgba(43, 33, 26, 0.09);
+  --ng-line-strong: rgba(43, 33, 26, 0.18);
+
+  /* ---- Surfaces ---- */
+  --ng-surface: #fffdf9;
+  --ng-surface-alt: #f8f3ea;
+
+  /* ---- Typography ---- */
+  --ng-font: 'Vazirmatn', 'Segoe UI', Tahoma, system-ui, -apple-system, sans-serif;
+  --ng-font-latin: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+
+  /* ---- Radii ---- */
+  --ng-radius-xs: 8px;
+  --ng-radius-sm: 12px;
+  --ng-radius: 18px;
+  --ng-radius-lg: 26px;
+  --ng-radius-pill: 999px;
+
+  /* ---- Shadows ---- */
+  --ng-shadow-soft: 0 10px 30px rgba(43, 33, 26, 0.07);
+  --ng-shadow: 0 22px 56px rgba(43, 33, 26, 0.13);
+  --ng-shadow-lift: 0 34px 80px rgba(43, 33, 26, 0.2);
+  --ng-shadow-glass: 0 24px 64px rgba(10, 7, 5, 0.42);
+  --ng-glow-gold: 0 0 0 1px rgba(200, 166, 106, 0.35), 0 24px 70px rgba(200, 166, 106, 0.25);
+
+  /* ---- Layout ---- */
+  --ng-max: 1320px;
+  --ng-gutter: clamp(18px, 4vw, 54px);
+  --ng-header-h: 86px;
+
+  /* ---- Motion ---- */
+  --ng-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ng-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ng-dur: 0.5s;
+
+  /* ---- Texture ---- */
+  --ng-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}

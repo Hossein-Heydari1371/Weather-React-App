@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Base — reset, typography, shared primitives
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ng-font);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.85;
+  color: var(--ng-brown);
+  background: var(--ng-ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+p {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ng-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgba(200, 166, 106, 0.3);
+}
+
+/* ---------------------------------------------------------------- utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ng-icon {
+  flex: none;
+}
+
+.ng-skip {
+  position: absolute;
+  inset-inline-start: 14px;
+  top: -70px;
+  z-index: 200;
+  padding: 10px 20px;
+  border-radius: var(--ng-radius-pill);
+  background: var(--ng-charcoal);
+  color: var(--ng-cream);
+  font-size: 0.85rem;
+  transition: top 0.25s var(--ng-ease);
+}
+
+.ng-skip:focus {
+  top: 14px;
+}
+
+.ng-main {
+  min-height: 55vh;
+}
+
+/* ------------------------------------------------------------- reveal */
+.ng-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s var(--ng-ease-out),
+    transform 0.8s var(--ng-ease-out);
+}
+
+.ng-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .ng-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------- sections */
+.ng-section {
+  width: 100%;
+  max-width: var(--ng-max);
+  margin-inline: auto;
+  padding: clamp(58px, 7vw, 108px) var(--ng-gutter);
+}
+
+.ng-section--tight {
+  padding-block: clamp(40px, 5vw, 74px);
+}
+
+.ng-section__head {
+  max-width: 660px;
+  margin: 0 auto clamp(30px, 4vw, 56px);
+  text-align: center;
+}
+
+.ng-section__more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(30px, 4vw, 48px);
+}
+
+.ng-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  color: var(--ng-gold-deep);
+}
+
+.ng-eyebrow::before,
+.ng-eyebrow::after {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ng-gold));
+}
+
+.ng-eyebrow::after {
+  background: linear-gradient(90deg, var(--ng-gold), transparent);
+}
+
+.ng-title {
+  margin-top: 14px;
+  font-size: clamp(1.5rem, 3.2vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ng-brown);
+}
+
+.ng-title--start {
+  text-align: start;
+}
+
+.ng-subtitle {
+  margin-top: 12px;
+  font-size: 0.97rem;
+  color: var(--ng-muted);
+}
+
+.ng-prose {
+  max-width: 720px;
+  display: grid;
+  gap: 22px;
+  color: var(--ng-muted);
+}
+
+.ng-prose--center {
+  margin-inline: auto;
+  text-align: center;
+  justify-items: center;
+}
+
+.ng-prose__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
