@@ -1,8 +1,8 @@
-# Base44 dev environment for the Weather React App (Vite + React).
+# Base44 dev environment for Nilgoon Gallery (نیلگون گالری) — React 19 + Vite.
 #
-# Frontend-only project: no backend, no database, no external credentials.
-# The OpenWeatherMap API key is read from src/services/weatherApi.js and the
-# browser calls the API directly.
+# Frontend-only storefront: no backend, no database, no external credentials.
+# The catalogue and all commerce state live in src/ (localStorage behind the
+# service modules); no third-party API is called at runtime.
 #
 # Runs the app from the cloned source with a live-reloading Vite dev server on
 # host port 3000. Dependencies are (re)installed from the lockfile on startup so
