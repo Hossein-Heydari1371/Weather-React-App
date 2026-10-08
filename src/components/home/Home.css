@@ -112,6 +112,29 @@
   border-radius: 999px;
 }
 
+/* Wide screens: hero copy sits on the left like the reference,
+   freeing the center for the arch + product stage */
+@media (min-width: 1000px) {
+  .hero-copy {
+    left: 5vw;
+    transform: none;
+    width: min(30vw, 430px);
+    text-align: right;
+  }
+
+  .gold-divider {
+    margin: 10px 0 8px auto; /* pushed to the right edge (RTL) */
+  }
+
+  .pi-desc {
+    margin: 4px 0 0;
+  }
+
+  .pi-chips {
+    justify-content: flex-start;
+  }
+}
+
 /* ---- Side arrows (glass circles at mid-height) ---- */
 .arrow-btn {
   position: absolute;

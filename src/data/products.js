@@ -306,4 +306,11 @@ export const PRODUCTS = [
 
 export const categoryName = (id) => CATEGORIES.find((c) => c.id === id)?.nameFa ?? '';
 
-export const FEATURED_PRODUCTS = PRODUCTS.filter((p) => p.featured);
+// Featured ring order: real products and reserved "به‌زودی" slots
+// alternate so the carousel always looks balanced. Re-order or add
+// entries here freely — the carousel follows this list.
+const byId = (id) => PRODUCTS.find((p) => p.id === id);
+export const FEATURED_PRODUCTS = [
+  byId(1), byId(5), byId(2), byId(6), byId(3),
+  byId(7), byId(4), byId(8), byId(9), byId(10),
+];

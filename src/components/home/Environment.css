@@ -14,7 +14,7 @@
   position: absolute;
   left: 50%;
   bottom: 38%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% - var(--px, 0) * 14px));
   width: min(780px, 88vw);
   height: min(56vh, 540px);
   border-radius: 50% 50% 0 0 / 34% 34% 0 0;
@@ -167,7 +167,7 @@
   bottom: 11%;
   width: min(720px, 82vw);
   height: 36%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% - var(--px, 0) * 10px));
   z-index: 2;
   background: linear-gradient(180deg, rgba(255, 224, 166, 0.11), transparent 82%);
   clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
@@ -208,6 +208,26 @@
   92%  { opacity: 0.2; }
   100% { transform: translate(var(--sw), 106vh) rotate(380deg); opacity: 0; }
 }
+
+/* Golden bokeh orbs — soft cinematic haze in the room */
+.env-bokeh {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.bk {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 226, 166, 0.5), rgba(255, 226, 166, 0) 70%);
+  filter: blur(7px);
+}
+
+.bk.b1 { width: 90px; height: 90px; left: 17%; top: 22%; opacity: 0.3; transform: translateX(calc(var(--px, 0) * -22px)); }
+.bk.b2 { width: 58px; height: 58px; right: 21%; top: 17%; opacity: 0.34; transform: translateX(calc(var(--px, 0) * -30px)); }
+.bk.b3 { width: 44px; height: 44px; left: 33%; top: 38%; opacity: 0.22; transform: translateX(calc(var(--px, 0) * -16px)); }
+.bk.b4 { width: 110px; height: 110px; right: 10%; top: 37%; opacity: 0.18; transform: translateX(calc(var(--px, 0) * -40px)); }
 
 /* Atmospheric overlays */
 .env-topfade {

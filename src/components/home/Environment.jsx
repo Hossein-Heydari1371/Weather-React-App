@@ -28,6 +28,14 @@ export default function Environment() {
       {/* Soft volumetric light falling from the arch to the pedestal */}
       <div className="light-shaft" />
 
+      {/* Golden bokeh orbs — cinematic depth haze */}
+      <div className="env-bokeh">
+        <span className="bk b1" />
+        <span className="bk b2" />
+        <span className="bk b3" />
+        <span className="bk b4" />
+      </div>
+
       {/* Floating petals — sparingly */}
       <div className="env-petals">
         {PETALS.map((n) => <span key={n} className={`petal p${n}`} />)}

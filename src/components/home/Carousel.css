@@ -5,9 +5,17 @@
   inset: 0;
   z-index: 10;
   perspective: 1600px;
-  perspective-origin: 50% 38%;
+  /* subtle pointer parallax — vars set on .home */
+  perspective-origin: calc(50% + var(--px, 0) * 60px) calc(38% + var(--py, 0) * 30px);
+  /* live drag resistance — var set on .home, smooth return on release */
+  transform: translateX(var(--drag, 0px));
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   --ring-rx: min(44vw, 520px);
   --card-w: min(280px, 34vw);
+}
+
+.home.dragging .ring-stage {
+  transition: none; /* loupe/follow drag instantly, no lag */
 }
 
 .ring-item {
@@ -67,6 +75,11 @@
   animation: cardFloat 7s ease-in-out infinite;
 }
 
+/* details phase: slightly recede the hero card for the loupe */
+.ring-item.phase-details .ring-card {
+  filter: brightness(1.04);
+}
+
 .ring-card img {
   position: absolute;
   inset: 10px;
@@ -108,11 +121,15 @@
   right: 7%;
   height: 52%;
   overflow: hidden;
-  opacity: 0.22;
-  filter: blur(2px);
+  opacity: 0.3;
+  filter: blur(1.5px);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 72%);
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 72%);
   pointer-events: none;
+}
+
+.ring-item.is-active .ring-reflection {
+  opacity: 0.36; /* strong, clear reflection on the polished marble */
 }
 
 .ring-reflection img {
@@ -145,6 +162,51 @@
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 20px rgba(255, 220, 150, 0.28); }
   50% { box-shadow: 0 0 34px rgba(255, 220, 150, 0.5); }
+}
+
+/* ---- Jeweller's loupe: clasp & hardware close-up (real photo) ---- */
+.focus-loupe {
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  z-index: 260;
+  transform: translate(-50%, -50%) translateX(calc(var(--card-w) / 2 + 46px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.loupe-glass {
+  width: clamp(150px, 19vw, 200px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-size: 330%;
+  background-position: 50% 22%; /* clasp / top hardware region */
+  border: 2px solid rgba(212, 175, 55, 0.55);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(212, 175, 55, 0.2),
+    inset 0 0 26px rgba(255, 244, 214, 0.12);
+  animation: loupeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.loupe-label {
+  font-size: 11px;
+  color: #E8C98A;
+  letter-spacing: 0.06em;
+  animation: fadeInLoupe 0.8s 0.15s ease both;
+}
+
+@keyframes loupeIn {
+  from { opacity: 0; transform: scale(0.62); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInLoupe {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* ---- Central marble pedestal ---- */
@@ -222,6 +284,17 @@
 
   .ring-item.is-active .ring-card {
     animation: none;
+  }
+
+  .focus-loupe {
+    left: 9%;
+    top: 70%;
+    transform: none;
+  }
+
+  .loupe-glass {
+    width: 118px;
+    background-size: 300%;
   }
 }
 
