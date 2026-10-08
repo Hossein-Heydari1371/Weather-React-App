@@ -1,0 +1,44 @@
+.account-overlay {
+  align-items: center;
+}
+
+.account-panel {
+  position: relative;
+  width: min(380px, 92vw);
+  padding: 28px 26px 22px;
+  animation: accountIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes accountIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.account-close {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  width: 34px;
+  height: 34px;
+}
+
+.account-sub {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: #B9AB92;
+  line-height: 1.9;
+}
+
+.account-form {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-note {
+  margin-top: 14px;
+  font-size: 11px;
+  color: rgba(203, 168, 94, 0.75);
+  text-align: center;
+}

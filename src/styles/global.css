@@ -1,0 +1,227 @@
+/* ============================================================
+   نیلگون گالری — استایل‌های سراسری
+   Nilgoon Galery — global styles, design tokens & shared UI
+   ============================================================ */
+
+:root {
+  --gold: #D4AF37;
+  --gold-soft: #E8C98A;
+  --gold-bright: #F0E68C;
+  --ivory: #F5F1E8;
+  --cream: #EAE6E1;
+  --ink: #171126;
+  --deep: #1A1A2E;
+  --deep-2: #2D2D44;
+  --font-fa: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+  --font-en: 'Cormorant Garamond', 'Times New Roman', serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-fa);
+  background: #14101d;
+  color: var(--ivory);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body.home-locked {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.35);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Shared glass surface */
+.glass {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Shared buttons */
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+  color: #231a08;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 26px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+.btn-gold:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 8px 26px rgba(212, 175, 55, 0.3);
+}
+
+.btn-ghost {
+  background: rgba(212, 175, 55, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: var(--gold-soft);
+  border-radius: 12px;
+  padding: 9px 24px;
+  font-family: inherit;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+.btn-ghost:hover {
+  background: rgba(212, 175, 55, 0.14);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.15);
+}
+
+/* Overlay + panel shared styles (search / cart / account) */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(8, 5, 14, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease both;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.panel {
+  background: rgba(28, 20, 40, 0.82);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 20px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  color: var(--ivory);
+}
+
+.panel-title {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ivory);
+}
+
+.panel-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 11px 14px;
+  color: var(--ivory);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.25s;
+}
+
+.panel-input:focus {
+  border-color: rgba(212, 175, 55, 0.55);
+}
+
+.panel-input::placeholder {
+  color: rgba(245, 241, 232, 0.4);
+}
+
+.icon-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  color: rgba(245, 241, 232, 0.85);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s;
+}
+
+.icon-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Toast */
+.toast-host {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  background: rgba(28, 20, 40, 0.92);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #F0E8D5;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 13px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  animation: toastIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Reduced motion: calm everything down */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
+  }
+}

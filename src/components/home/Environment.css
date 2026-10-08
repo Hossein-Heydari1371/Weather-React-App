@@ -1,0 +1,249 @@
+/* ---- Cinematic showroom environment ---- */
+
+.env {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+  background: linear-gradient(180deg, #171231 0%, #221a38 55%, #2e2144 100%);
+  pointer-events: none;
+}
+
+/* Grand arch opening — the window onto the sunset */
+.arch-opening {
+  position: absolute;
+  left: 50%;
+  bottom: 38%;
+  transform: translateX(-50%);
+  width: min(780px, 88vw);
+  height: min(56vh, 540px);
+  border-radius: 50% 50% 0 0 / 34% 34% 0 0;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #1b1535 0%,
+    #3b2a55 30%,
+    #6e4562 52%,
+    #a35f6b 68%,
+    #d8906a 82%,
+    #f2c488 94%,
+    #ffe2ae 100%
+  );
+  border: 2px solid rgba(212, 175, 55, 0.45);
+  box-shadow:
+    0 0 60px rgba(255, 220, 160, 0.14),
+    inset 0 0 90px rgba(255, 224, 166, 0.16),
+    inset 0 -20px 60px rgba(255, 210, 150, 0.22);
+}
+
+/* Sunset sun near the horizon */
+.arch-sun {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  width: 220px;
+  height: 220px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 240, 200, 0.98) 0%,
+    rgba(255, 220, 160, 0.6) 34%,
+    rgba(255, 196, 130, 0.2) 60%,
+    transparent 74%
+  );
+  filter: blur(2px);
+}
+
+/* Distant mountains — soft, blurred, secondary */
+.arch-mountains {
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: 6%;
+  height: 30%;
+}
+
+.arch-mountains .m1,
+.arch-mountains .m2 {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  filter: blur(4px);
+  opacity: 0.8;
+}
+
+.arch-mountains .m1 {
+  left: 2%;
+  width: 56%;
+  height: 120%;
+  background: linear-gradient(180deg, #2e2547, #241d3c);
+}
+
+.arch-mountains .m2 {
+  right: 0;
+  width: 50%;
+  height: 90%;
+  background: linear-gradient(180deg, #292242, #1f1937);
+}
+
+/* Faint clouds */
+.arch-cloud {
+  position: absolute;
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 235, 205, 0.22), transparent);
+  filter: blur(4px);
+}
+
+.arch-cloud.c1 { top: 22%; left: 8%; right: 24%; }
+.arch-cloud.c2 { top: 36%; left: 30%; right: 10%; height: 10px; opacity: 0.7; }
+
+/* Warm horizon haze inside the opening */
+.arch-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40%;
+  background: linear-gradient(180deg, transparent, rgba(255, 216, 152, 0.22));
+}
+
+/* Floor line — where wall meets marble */
+.floor-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 38%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 220, 160, 0.5), transparent);
+  filter: blur(1px);
+  opacity: 0.75;
+  z-index: 2;
+}
+
+/* Polished dark marble floor */
+.env-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 38%;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    #453053 0%,
+    #2c1f3d 16%,
+    #1c142e 52%,
+    #120c1f 82%,
+    #0d0917 100%
+  );
+}
+
+.env-floor::before {
+  /* marble veining */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(63deg, rgba(255, 255, 255, 0.045) 0 1.5px, transparent 1.5px 64px),
+    repeating-linear-gradient(-57deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(2deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 130px);
+  opacity: 0.55;
+}
+
+.env-floor::after {
+  /* warm sunset sheen on the marble near the horizon */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(62% 90% at 50% 4%, rgba(255, 222, 160, 0.2), transparent 68%);
+}
+
+/* Volumetric light shaft from arch to pedestal */
+.light-shaft {
+  position: absolute;
+  left: 50%;
+  bottom: 11%;
+  width: min(720px, 82vw);
+  height: 36%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(255, 224, 166, 0.11), transparent 82%);
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  filter: blur(10px);
+}
+
+/* Floating petals */
+.env-petals {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.petal {
+  position: absolute;
+  top: -4%;
+  width: 11px;
+  height: 9px;
+  background: radial-gradient(circle at 30% 30%, #fff4dd, #e6c98e 68%, #caa460);
+  border-radius: 62% 38% 55% 45%;
+  opacity: 0;
+  filter: blur(0.4px);
+  animation: petalFall var(--dur, 20s) linear var(--delay, 0s) infinite;
+}
+
+.petal.p1 { left: 8%;  --dur: 21s; --delay: -2s;  --sw: 46px; }
+.petal.p2 { left: 24%; --dur: 26s; --delay: -11s; --sw: 70px; }
+.petal.p3 { left: 41%; --dur: 18s; --delay: -6s;  --sw: 34px; }
+.petal.p4 { left: 58%; --dur: 24s; --delay: -15s; --sw: 60px; }
+.petal.p5 { left: 72%; --dur: 20s; --delay: -9s;  --sw: 42px; }
+.petal.p6 { left: 86%; --dur: 27s; --delay: -18s; --sw: 76px; }
+.petal.p7 { left: 66%; --dur: 23s; --delay: -3s;  --sw: 52px; width: 8px; height: 7px; }
+
+@keyframes petalFall {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.5; }
+  50%  { transform: translate(calc(var(--sw) * -1), 52vh) rotate(190deg); opacity: 0.42; }
+  92%  { opacity: 0.2; }
+  100% { transform: translate(var(--sw), 106vh) rotate(380deg); opacity: 0; }
+}
+
+/* Atmospheric overlays */
+.env-topfade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18%;
+  z-index: 3;
+  background: linear-gradient(180deg, rgba(10, 7, 18, 0.6), transparent);
+}
+
+.env-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: radial-gradient(120% 92% at 50% 42%, transparent 52%, rgba(8, 5, 14, 0.6) 100%);
+}
+
+/* Mobile: simpler scene, fewer petals */
+@media (max-width: 640px) {
+  .arch-opening {
+    height: 42vh;
+    width: 92vw;
+  }
+
+  .petal.p5,
+  .petal.p6,
+  .petal.p7 {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petal {
+    animation: none;
+    opacity: 0;
+  }
+}

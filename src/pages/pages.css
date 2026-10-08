@@ -1,0 +1,267 @@
+/* ---- Secondary pages (products / about / contact) ---- */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #241b3c 0%, #14101d 55%, #0e0a16 100%);
+  color: #E9DFC9;
+  padding: 112px 20px 70px;
+}
+
+.page-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.page-title {
+  text-align: center;
+  font-weight: 300;
+  font-size: clamp(26px, 4vw, 40px);
+  color: #F5F1E8;
+  margin-bottom: 8px;
+}
+
+.page-sub {
+  text-align: center;
+  color: #B9AB92;
+  font-size: 14px;
+  margin-bottom: 34px;
+}
+
+/* Category chips */
+.chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 34px;
+}
+
+.chip {
+  padding: 7px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: #D9CFB8;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.chip:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  color: #fff;
+}
+
+.chip.active {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  background: rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.15);
+}
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.p-card {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(170deg, rgba(38, 28, 52, 0.55), rgba(20, 14, 31, 0.7));
+  overflow: hidden;
+  transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+}
+
+.p-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+}
+
+.p-media {
+  aspect-ratio: 1 / 1.05;
+  position: relative;
+  background:
+    linear-gradient(170deg, rgba(46, 34, 66, 0.5), rgba(23, 17, 33, 0.6)),
+    repeating-linear-gradient(63deg, rgba(255, 255, 255, 0.03) 0 1.5px, transparent 1.5px 60px);
+}
+
+.p-media img {
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.p-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #CBA85E;
+}
+
+.p-placeholder b {
+  font-weight: 400;
+  font-size: 14px;
+  color: #E5D6AE;
+}
+
+.p-body {
+  padding: 14px 16px 18px;
+}
+
+.p-body h3 {
+  font-size: 15px;
+  font-weight: 500;
+  color: #F5F1E8;
+  margin-bottom: 8px;
+  min-height: 22px;
+}
+
+.p-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.p-cat {
+  font-size: 11.5px;
+  color: #CBA85E;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.p-price {
+  font-size: 12px;
+  color: var(--gold-bright);
+}
+
+.p-soon {
+  font-size: 12px;
+  color: #9A8C74;
+}
+
+/* About */
+.about-inner {
+  max-width: 760px;
+}
+
+.about-card {
+  padding: 34px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  line-height: 2.1;
+  font-size: 14.5px;
+  font-weight: 300;
+  color: #E3D8C2;
+}
+
+.about-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.about-values span {
+  font-size: 12.5px;
+  color: #E8C98A;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  padding: 5px 16px;
+  background: rgba(212, 175, 55, 0.06);
+}
+
+.about-sign {
+  text-align: center;
+  margin-top: 8px;
+  color: #CBA85E;
+}
+
+.about-sign i {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 26px;
+  letter-spacing: 0.12em;
+}
+
+/* Contact */
+.contact-inner {
+  max-width: 600px;
+}
+
+.contact-form {
+  padding: 30px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cf-label {
+  font-size: 12.5px;
+  color: #CBA85E;
+  margin: 8px 0 2px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+}
+
+.contact-form .btn-gold {
+  margin-top: 16px;
+  align-self: center;
+  min-width: 160px;
+}
+
+.contact-note {
+  text-align: center;
+  font-size: 12px;
+  color: #9A8C74;
+  margin-top: 18px;
+  line-height: 2;
+}
+
+/* NotFound */
+.notfound {
+  text-align: center;
+  padding-top: 20vh;
+}
+
+.notfound h1 {
+  font-weight: 200;
+  font-size: 42px;
+  color: #F5F1E8;
+  margin-bottom: 10px;
+}
+
+.notfound a {
+  color: var(--gold-soft);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+  padding-bottom: 2px;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 96px 14px 50px;
+  }
+
+  .about-card {
+    padding: 24px 20px;
+  }
+}
