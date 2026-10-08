@@ -41,6 +41,9 @@ export const site = {
     title: 'زیبایی در جزئیات است...',
     subtitle: 'مجموعه‌ای از خاص‌ترین کیف‌های زنانه',
     scroll: 'اسکرول کنید',
+    /* Film shown in the hero. It plays frame by frame with the page scroll —
+       swap this one URL to change the film. */
+    video: 'https://media.base44.com/videos/public/6ac748a1a9a7402174db2732/6d2376f8d_nilgoon_hero_scroll_compressed.mp4',
   },
 
   home: {

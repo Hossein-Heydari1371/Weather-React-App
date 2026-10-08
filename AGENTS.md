@@ -51,6 +51,21 @@ curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/   # expect 200
 - The glass navigation stays visible down to **880px**; below that `MobileNav` (a
   purpose-built sheet, not a shrunken desktop bar) takes over.
 
+## Hero film (scroll-scrubbed)
+
+- `src/components/home/Hero.jsx` is a **scroll-scrubbed film**, not a carousel: the
+  section is a tall (`260svh`) runway whose stage is `position: sticky`, and the
+  scroll position sets `video.currentTime`. Nothing autoplays; the first scroll
+  primes it. The progress bar / hint fade read the `--ng-hero-progress` custom
+  property that the scroll handler writes — no React re-render per frame.
+- **Two `<video>` elements share one URL**: the sharp one is `object-fit: contain`
+  (footage never cropped, stretched or zoomed) and a blurred `cover` copy fills the
+  rest of the screen so there are no empty bars.
+- The film URL is `site.hero.video` (880×720, 15 s, 361 frames, `moov` at the front
+  so seeking is cheap). It is served from the media CDN, not `public/`.
+- Any ancestor of `.ng-hero` that gains `overflow: hidden` silently breaks the
+  sticky pinning — the stage keeps scrolling away instead of staying pinned.
+
 ## Content & terminology rules
 
 - **Never describe the bags as embroidered.** Forbidden: `گلدوزی`, `embroider*`.

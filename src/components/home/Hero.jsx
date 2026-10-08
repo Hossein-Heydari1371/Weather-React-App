@@ -1,180 +1,139 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Link } from '../../router/Router'
+import { useEffect, useRef } from 'react'
 import Icon from '../ui/Icon'
 import Button from '../ui/Button'
-import Price from '../ui/Price'
 import { site } from '../../data/site'
-import { ProductService } from '../../services/ProductService'
-import { toPersianDigits } from '../../utils/format'
-
-const AUTOPLAY_MS = 6500
 
 /**
- * Hero — the cinematic stage from reference image 1.
+ * Hero — the cinematic stage.
  *
- * Layers: warm interior gradient, architectural arch, golden spotlights and a
- * reflective marble floor (all CSS, so nothing depends on a stock photo).
- * On the platform sits one real product image per slide, inside a circular
- * disc — the bags keep their aspect ratio and are never distorted.
+ * The film is scrubbed by the page scroll: the section is a tall runway whose
+ * inner stage is pinned to the viewport, and every scroll position seeks the
+ * video to the matching frame. Nothing autoplays — the visitor's scroll drives
+ * the film, starting from the first movement.
+ *
+ * A second, blurred copy of the same film fills the rest of the screen, so the
+ * picture covers everything edge to edge while the footage itself keeps its
+ * native framing: never cropped, never stretched, never zoomed.
  */
 export default function Hero() {
-  const [slides, setSlides] = useState([])
-  const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
+  const sectionRef = useRef(null)
+  const videoRef = useRef(null)
+  const backdropRef = useRef(null)
+  const hintRef = useRef(null)
 
   useEffect(() => {
-    let active = true
-    ProductService.getFeatured(12).then((items) => {
-      if (!active) return
-      const seen = new Set()
-      const unique = []
-      items.forEach((product) => {
-        if (seen.has(product.thumbnail) || unique.length >= 4) return
-        seen.add(product.thumbnail)
-        unique.push(product)
-      })
-      setSlides(unique)
-    })
+    const section = sectionRef.current
+    const video = videoRef.current
+    if (!section || !video) return undefined
+
+    const backdrop = backdropRef.current
+    let raf = 0
+    let primed = false
+
+    const seek = (time) => {
+      const duration = video.duration
+      if (!Number.isFinite(duration) || duration <= 0) return
+      const target = Math.min(Math.max(time, 0), duration - 0.05)
+      if (Math.abs(target - video.currentTime) < 0.008) return
+      video.currentTime = target
+      if (backdrop) backdrop.currentTime = target
+    }
+
+    const render = () => {
+      raf = 0
+      const rect = section.getBoundingClientRect()
+      const runway = rect.height - window.innerHeight
+      const progress = runway > 0 ? Math.min(1, Math.max(0, -rect.top / runway)) : 0
+      section.style.setProperty('--ng-hero-progress', progress.toFixed(4))
+      if (hintRef.current) hintRef.current.classList.toggle('is-hidden', progress > 0.04)
+      if (video.readyState >= 1) seek(progress * (video.duration - 0.05))
+    }
+
+    const onScroll = () => {
+      if (!primed) {
+        primed = true
+        /* iOS only paints seeked frames after the film has played once. */
+        const attempt = video.play()
+        if (attempt && typeof attempt.then === 'function') {
+          attempt.then(() => video.pause()).catch(() => {})
+        } else {
+          video.pause()
+        }
+      }
+      if (!raf) raf = window.requestAnimationFrame(render)
+    }
+
+    render()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    video.addEventListener('loadedmetadata', render)
     return () => {
-      active = false
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      video.removeEventListener('loadedmetadata', render)
+      if (raf) window.cancelAnimationFrame(raf)
     }
   }, [])
 
-  const goTo = useCallback(
-    (next) => {
-      if (!slides.length) return
-      setIndex(((next % slides.length) + slides.length) % slides.length)
-    },
-    [slides.length],
-  )
-
-  useEffect(() => {
-    if (paused || slides.length < 2) return undefined
-    const prefersReduced =
-      typeof window !== 'undefined' &&
-      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return undefined
-    const timer = window.setInterval(() => setIndex((value) => (value + 1) % slides.length), AUTOPLAY_MS)
-    return () => window.clearInterval(timer)
-  }, [paused, slides.length])
-
-  const onKeyDown = (event) => {
-    if (event.key === 'ArrowLeft') goTo(index + 1)
-    if (event.key === 'ArrowRight') goTo(index - 1)
+  /* The cue starts the film rather than skipping past it. */
+  const scrollDown = () => {
+    window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'smooth' })
   }
 
-  const current = slides[index]
-
   return (
-    <section
-      className="ng-hero"
-      aria-label="نیلگون گالری"
-      onKeyDown={onKeyDown}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
-    >
-      <div className="ng-hero__bg" aria-hidden="true">
-        <span className="ng-hero__arch" />
-        <span className="ng-hero__haze" />
-        <span className="ng-hero__floor" />
-        <span className="ng-hero__grain" />
-      </div>
+    <section ref={sectionRef} className="ng-hero" aria-label="نیلگون گالری">
+      <div className="ng-hero__sticky">
+        <video
+          ref={backdropRef}
+          className="ng-hero__video-bg"
+          src={site.hero.video}
+          muted
+          playsInline
+          preload="auto"
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+        <video
+          ref={videoRef}
+          className="ng-hero__video"
+          src={site.hero.video}
+          muted
+          playsInline
+          preload="auto"
+          tabIndex={-1}
+          aria-hidden="true"
+        />
 
-      <div className="ng-hero__inner">
-        <div className="ng-hero__text">
-          <span className="ng-eyebrow">{site.hero.eyebrow}</span>
-          <h1 className="ng-hero__title">{site.hero.title}</h1>
-          <p className="ng-hero__subtitle">{site.hero.subtitle}</p>
-          <div className="ng-hero__cta">
-            <Button to="/products" variant="gold">
-              {site.home.videoCta}
-            </Button>
-            <Button to="/about" variant="ghost">
-              درباره نیلگون
-            </Button>
-          </div>
-        </div>
+        <span className="ng-hero__scrim" aria-hidden="true" />
+        <span className="ng-hero__grain" aria-hidden="true" />
 
-        <div className="ng-hero__stage">
-          {slides.length > 1 && (
-            <button
-              type="button"
-              className="ng-hero__arrow ng-hero__arrow--prev"
-              onClick={() => goTo(index + 1)}
-              aria-label="محصول قبلی"
-            >
-              <Icon name="chevronRight" size={22} />
-            </button>
-          )}
-
-          <div className="ng-hero__stack">
-            <div className="ng-hero__plate">
-              {slides.map((product, slideIndex) => (
-                <Link
-                  key={product.id}
-                  to={`/product/${product.slug}`}
-                  className={`ng-hero__slide ${slideIndex === index ? 'is-active' : ''}`}
-                  tabIndex={slideIndex === index ? 0 : -1}
-                  aria-hidden={slideIndex !== index}
-                >
-                  <img
-                    src={product.thumbnail}
-                    alt={product.name}
-                    loading={slideIndex === 0 ? 'eager' : 'lazy'}
-                    decoding="async"
-                  />
-                </Link>
-              ))}
+        <div className="ng-hero__inner">
+          <div className="ng-hero__text">
+            <span className="ng-eyebrow">{site.hero.eyebrow}</span>
+            <h1 className="ng-hero__title">{site.hero.title}</h1>
+            <p className="ng-hero__subtitle">{site.hero.subtitle}</p>
+            <div className="ng-hero__cta">
+              <Button to="/products" variant="gold">
+                {site.home.videoCta}
+              </Button>
+              <Button to="/about" variant="ghost">
+                درباره نیلگون
+              </Button>
             </div>
-            <span className="ng-hero__disc" aria-hidden="true" />
           </div>
-
-          {slides.length > 1 && (
-            <button
-              type="button"
-              className="ng-hero__arrow ng-hero__arrow--next"
-              onClick={() => goTo(index - 1)}
-              aria-label="محصول بعدی"
-            >
-              <Icon name="chevronLeft" size={22} />
-            </button>
-          )}
         </div>
-      </div>
 
-      {current && (
-        <div className="ng-hero__caption" aria-live="polite">
-          <Link to={`/product/${current.slug}`} className="ng-hero__caption-name">
-            {current.name}
-          </Link>
-          <Price price={current.price} salePrice={current.salePrice} size="sm" currency={current.currency} />
-        </div>
-      )}
+        <button ref={hintRef} type="button" className="ng-hero__scroll" onClick={scrollDown}>
+          <span className="ng-hero__scroll-icon" aria-hidden="true">
+            <Icon name="mouse" size={22} />
+          </span>
+          {site.hero.scroll}
+        </button>
 
-      {slides.length > 1 && (
-        <div className="ng-hero__dots" role="tablist" aria-label="اسلایدهای محصول">
-          {slides.map((product, dotIndex) => (
-            <button
-              key={product.id}
-              type="button"
-              role="tab"
-              aria-selected={dotIndex === index}
-              aria-label={`اسلاید ${toPersianDigits(dotIndex + 1)}`}
-              className={`ng-hero__dot ${dotIndex === index ? 'is-active' : ''}`}
-              onClick={() => goTo(dotIndex)}
-            />
-          ))}
-        </div>
-      )}
-
-      <a className="ng-hero__scroll" href="#ng-categories">
-        <span className="ng-hero__scroll-icon" aria-hidden="true">
-          <Icon name="mouse" size={22} />
+        <span className="ng-hero__progress" aria-hidden="true">
+          <span className="ng-hero__progress-fill" />
         </span>
-        {site.hero.scroll}
-      </a>
+      </div>
     </section>
   )
 }
